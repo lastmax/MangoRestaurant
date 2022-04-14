@@ -26,11 +26,81 @@ namespace Mango.Services.ProductAPI.Controllers
             }
             catch (Exception ex)
             {
-                _response.IsSuccess = false;
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
+                HandleError(ex);
             }
 
             return _response;
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<object> Get(int id)
+        {
+            try
+            {
+                var productDto = await _productRepository.GetProductById(id);
+                _response.Result = productDto;
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
+            }
+
+            return _response;
+        }
+
+        [HttpPost]
+        public async Task<object> Post([FromBody] ProductDTO productDTO)
+        {
+            try
+            {
+                var model = await _productRepository.CreateUpdateProduct(productDTO);
+                _response.Result = model;
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
+            }
+
+            return _response;
+        }
+
+        [HttpPut]
+        public async Task<object> Put([FromBody] ProductDTO productDTO)
+        {
+            try
+            {
+                var model = await _productRepository.CreateUpdateProduct(productDTO);
+                _response.Result = model;
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
+            }
+
+            return _response;
+        }
+
+        [HttpDelete]
+        public async Task<object> Put(int id)
+        {
+            try
+            {
+                var isSuccess = await _productRepository.Delete(id);
+                _response.Result = isSuccess;
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
+            }
+
+            return _response;
+        }
+
+        private void HandleError(Exception ex)
+        {
+            _response.IsSuccess = false;
+            _response.ErrorMessages = new List<string>() { ex.ToString() };
         }
     }
 }
