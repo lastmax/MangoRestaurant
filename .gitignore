@@ -269,3 +269,5 @@ __pycache__/
 
 # Folder for temporary object files
 **/obj/
+
+tempkey.jwk
