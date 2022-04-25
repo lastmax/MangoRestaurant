@@ -281,7 +281,11 @@ namespace IdentityServerHost.Quickstart.UI
                         else
                             throw new Exception("invalid return URL");
                     }
-
+                }
+                else
+                {
+                    throw new Exception(result.Errors?.Count() > 0 ? 
+                        result.Errors.First().Description : "Unidentified error when creating user");
                 }
             }
 
