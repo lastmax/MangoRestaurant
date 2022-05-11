@@ -1,6 +1,5 @@
-using Mango.Services.ShoppingCartAPI;
-using Mango.Services.ShoppingCartAPI.DbContexts;
-using Mango.Services.ShoppingCartAPI.Repository;
+using Mango.Services.CouponAPI;
+using Mango.Services.CouponAPI.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -14,7 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddSingleton(MappingConfig.RegisterMaps().CreateMapper());
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddScoped<ICartRepository, CartRepository>();
+//builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddControllers();
 
 builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
@@ -39,7 +38,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mango.Service.ShoppingCartAPI", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mango.Service.CouponAPI", Version = "v1" });
     c.EnableAnnotations();
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
