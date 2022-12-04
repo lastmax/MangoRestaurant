@@ -18,10 +18,12 @@ builder.Services.AddSingleton(MappingConfig.RegisterMaps().CreateMapper());
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICouponRepository, CouponRepository>();
 builder.Services.AddSingleton<IMessageBus>(s =>
     new AzureServiceBusMessageBus(builder.Configuration["ConnectionStrings:AzureServiceBus"]));
 builder.Services.AddControllers();
-
+builder.Services.AddHttpClient<ICouponRepository, CouponRepository>(u => 
+    u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:CouponAPI"]));
 builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
 {
     options.Authority = "https://localhost:7154/";

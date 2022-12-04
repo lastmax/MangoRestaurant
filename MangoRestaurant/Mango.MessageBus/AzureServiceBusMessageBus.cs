@@ -19,17 +19,25 @@ namespace Mango.MessageBus
 
         public async Task PublishMessage(BaseMessage message, string topicName)
         {
-            await using ServiceBusClient client = new (_connectionString);
-            var sender = client.CreateSender(topicName);
-
-            var jsonMessage = JsonConvert.SerializeObject(message);
-            var finalMessage = new ServiceBusMessage(Encoding.UTF8.GetBytes(jsonMessage))
+            try
             {
-                CorrelationId = Guid.NewGuid().ToString()
-            };
+                await using ServiceBusClient client = new(_connectionString);
+                var sender = client.CreateSender(topicName);
 
-            await sender.SendMessageAsync(finalMessage);
-            await client.DisposeAsync();
+                var jsonMessage = JsonConvert.SerializeObject(message);
+                var finalMessage = new ServiceBusMessage(Encoding.UTF8.GetBytes(jsonMessage))
+                {
+                    CorrelationId = Guid.NewGuid().ToString()
+                };
+
+                await sender.SendMessageAsync(finalMessage);
+                await client.DisposeAsync();
+            }
+            catch (Exception ex)
+            {
+                var erMessage = ex.Message;
+            }
+            
         }
     }
 }
