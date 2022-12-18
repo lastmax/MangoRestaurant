@@ -13,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 SD.CheckoutTopic = builder.Configuration["AzureTopics:Checkout"];
+SD.CheckoutQueue = builder.Configuration["AzureQueues:Checkout"];
 
 builder.Services.AddSingleton(MappingConfig.RegisterMaps().CreateMapper());
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

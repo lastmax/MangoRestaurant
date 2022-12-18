@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Azure.Messaging.ServiceBus;
 using Mango.MessageBus;
-using Mango.Services.OrderAPI.Messages;
-using Mango.Services.OrderAPI.Models;
-using Mango.Services.OrderAPI.Repository;
+using Mango.Services.Email.Messages;
+using Mango.Services.Email.Models;
+using Mango.Services.Email.Repository;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace Mango.Services.OrderAPI.Messaging
+namespace Mango.Services.Email.Messaging
 {
     public class AzureServiceBusConsumer : IAzureServiceBusConsumer
     {
@@ -18,7 +18,7 @@ namespace Mango.Services.OrderAPI.Messaging
         private readonly string _orderUpdatePaymentResultTopic;
         private readonly string _checkoutQueue;
         
-        private readonly OrderRepository _orderRepository;
+        private readonly EmailRepository _orderRepository;
         
         private readonly IConfiguration _configuration;
         private readonly IMessageBus _messageBus;
@@ -27,7 +27,7 @@ namespace Mango.Services.OrderAPI.Messaging
         private ServiceBusProcessor _checkoutProcessor;
         private ServiceBusProcessor _orderUpdatePaymentStatusProcessor;
 
-        public AzureServiceBusConsumer(OrderRepository orderRepository, IConfiguration configuration, IMessageBus messageBus, IMapper mapper)
+        public AzureServiceBusConsumer(EmailRepository orderRepository, IConfiguration configuration, IMessageBus messageBus, IMapper mapper)
         {
             _orderRepository = orderRepository;
             _configuration = configuration;
